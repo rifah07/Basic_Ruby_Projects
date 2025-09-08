@@ -1,6 +1,11 @@
-def palindrome_ckecker(word)
-  
+def palindrome_checker(word)
+  if(word.reverse == word)
+    return true
+  else
+    return false
+  end
+
 end
 
-puts palindrome_ckecker("Bizzare")
-puts palindrome_ckecker("madam")
+puts palindrome_checker("Bizzare")
+puts palindrome_checker("madam")
