@@ -1,7 +1,7 @@
 def factorial(num)
   result = 1
   (1..num).each do |i|
-    result = result * i
+    result *= i
   end
   result
 end
