@@ -1,8 +1,11 @@
-#Book class should have:
+# frozen_string_literal: true
+
+# Book class should have:
 # - Attributes: title, author, isbn, availability status
 # - Methods: to_s for string representation, available? predicate method
 # - Consider adding: genre, publication_year, checked_out_by, due_date
 
+# Book represents a book in the library.
 class Book
   attr_accessor :availability_status, :checked_out_by, :due_date
   attr_reader :title, :author, :isbn, :genre, :publication_year
@@ -27,6 +30,6 @@ class Book
 
   def checked_out?
     !available?
-    #!@checked_out_by.nil?
+    # !@checked_out_by.nil?
   end
 end
