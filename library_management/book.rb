@@ -17,7 +17,7 @@ class Book
   end
 
   def to_s
-    "#{title} by #{author} (#{year}) - ISBN: #{isbn}"
+    "#{title} by #{author} (#{publication_year}) - ISBN: #{isbn}"
   end
 
   def available?
@@ -25,6 +25,6 @@ class Book
   end
 
   def checked_out?
-    @checked_out_by == nil
+    !@checked_out_by.nil?
   end
 end
