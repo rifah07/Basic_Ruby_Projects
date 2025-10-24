@@ -13,6 +13,7 @@ class Book
     @isbn = isbn
     @genre = genre
     @publication_year = publication_year
+    @checked_out_by = nil
     @availability_status = :available
   end
 
@@ -25,6 +26,7 @@ class Book
   end
 
   def checked_out?
-    !@checked_out_by.nil?
+    !available?
+    #!@checked_out_by.nil?
   end
 end
