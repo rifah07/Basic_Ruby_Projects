@@ -13,9 +13,9 @@ class Book
     @isbn = isbn
     @genre = genre
     @publication_year = publication_year
-    @checked_out_by = nil
     @availability_status = :available
   end
+  # Ruby initializes unset instance variables to nil automatically.
 
   def to_s
     "#{title} by #{author} (#{publication_year}) - ISBN: #{isbn}"
