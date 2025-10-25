@@ -17,6 +17,9 @@ class Member
     @checked_books = []
   end
 
+  def has_book?(book)
+    @checked_books.include?(book)
+  end
   def checkout_book(book)
     @checked_books << book
   end
