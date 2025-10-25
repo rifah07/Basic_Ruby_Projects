@@ -4,7 +4,7 @@
   # - Attributes: name, member_id, list of checked out books
   # - Methods: can_checkout? (check if member can borrow more books)
   # - Consider adding: checkout_limit (e.g., max 3 books), checkout_history
-#
+
 # This is member class for each member
 class Member
   attr_reader :name, :member_id, :checked_books
@@ -17,9 +17,14 @@ class Member
     @checked_books = []
   end
 
+  def to_s
+    "Member: #{@name} (ID: #{@member_id}) - Books: #{@checked_books.length}/#{CHECKOUT_LIMIT}"
+  end
+
   def has_book?(book)
     @checked_books.include?(book)
   end
+
   def checkout_book(book)
     @checked_books << book
   end
