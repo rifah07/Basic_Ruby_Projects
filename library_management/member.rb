@@ -1,4 +1,23 @@
 # frozen_string_literal: true
 
+# Member class should have:
+  # - Attributes: name, member_id, list of checked out books
+  # - Methods: can_checkout? (check if member can borrow more books)
+  # - Consider adding: checkout_limit (e.g., max 3 books), checkout_history
+#
+# This is member class for each member
 class Member
+  attr_reader :name, :member_id, :checked_books
+
+  CHECKOUT_LIMIT  = 3
+
+  def initialize(name, member_id, checked_books)
+    @name = name
+    @member_id = member_id
+    @checked_books = checked_books
+  end
+
+  def can_checkout?
+
+  end
 end
