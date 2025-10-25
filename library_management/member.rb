@@ -9,15 +9,23 @@
 class Member
   attr_reader :name, :member_id, :checked_books
 
-  CHECKOUT_LIMIT  = 3
+  CHECKOUT_LIMIT = 3
 
-  def initialize(name, member_id, checked_books)
+  def initialize(name, member_id)
     @name = name
     @member_id = member_id
-    @checked_books = checked_books
+    @checked_books = []
+  end
+
+  def checkout_book(book)
+    @checked_books << book
+  end
+
+  def return_book(book)
+    @checked_books.delete(book)
   end
 
   def can_checkout?
-
+    @checked_books.length < CHECKOUT_LIMIT
   end
 end
