@@ -147,9 +147,6 @@
 # Custom Exception Classes
 # TODO: Define your custom exceptions here
 
-# Member Class
-# TODO: Implement the Member class
-
 # Library Class
 # TODO: Implement the Library class
 
