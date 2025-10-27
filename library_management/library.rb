@@ -23,8 +23,11 @@ class Library
   end
 
   def remove_book(isbn)
+=begin
     book = @books.find {|b| b.isbn == isbn}
     @books.delete(book) if book
+=end
+    @books.delete_if { |book| book.isbn == isbn }
   end
 
   def add_member(member)
@@ -32,7 +35,10 @@ class Library
   end
 
   def remove_member(id)
+=begin
     member = @members.find {|m| m.id == id}
     @members.delete(member) if member
+=end
+    @members.delete_if {|member| member.id == id}
   end
 end
