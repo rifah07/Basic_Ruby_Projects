@@ -45,9 +45,12 @@ class Library
   end
 
   def check_out(isbn, member_id)
-    # TODO: Find book by ISBN
 
-    # TODO: Find member by member_id
+    book = @books.find {|b| b.isbn == isbn}
+    return "Book not found" if book.nil?
+
+    member = @members.find {|m| m.member_id == member_id}
+    return  "Member not found" if member.nil?
 
     # TODO: Check validations
 
