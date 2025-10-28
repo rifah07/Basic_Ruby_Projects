@@ -50,9 +50,10 @@ class Library
     return "Book not found" if book.nil?
 
     member = @members.find {|m| m.member_id == member_id}
-    return  "Member not found" if member.nil?
+    return "Member not found" if member.nil?
 
-    # TODO: Check validations
+    return "Book not available" if !book.available?
+    return "Member at checkout limit" if !member.can_checkout?
 
     # TODO: Update book
 
