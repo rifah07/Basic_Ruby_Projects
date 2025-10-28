@@ -12,6 +12,8 @@
 class Library
   attr_reader :name
 
+  CHECKOUT_DAYS = 15
+
   def initialize(name)
     @name = name
     @books = [] # using array, hash when Large datasets (1000+)
@@ -39,6 +41,20 @@ class Library
     member = @members.find {|m| m.id == id}
     @members.delete(member) if member
 =end
-    @members.delete_if {|member| member.id == id}
+    @members.delete_if {|member| member.member_id == id}
+  end
+
+  def check_out(isbn, member_id)
+    # TODO: Find book by ISBN
+
+    # TODO: Find member by member_id
+
+    # TODO: Check validations
+
+    # TODO: Update book
+
+    # TODO: Update member
+
+    # TODO: Return something
   end
 end
