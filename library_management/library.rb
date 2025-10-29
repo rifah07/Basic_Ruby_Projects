@@ -56,9 +56,14 @@ class Library
     return "Member at checkout limit" if !member.can_checkout?
 
     # TODO: Update book
+    book.availability_status = :checked_out
+    book.checked_out_by = member
+    book.due_date = Date.today + CHECKOUT_DAYS
 
     # TODO: Update member
+    member.checkout_book(book)
 
     # TODO: Return something
+    "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
   end
 end
