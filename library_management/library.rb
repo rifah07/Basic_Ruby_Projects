@@ -9,6 +9,7 @@
 #      - Search for books by title or author
 #      - List overdue books
 
+require 'date'
 class Library
   attr_reader :name
 
