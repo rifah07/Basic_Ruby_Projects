@@ -98,5 +98,12 @@ class Library
     results
   end
 
+  def search_books_by_author(author)
+    results = @books.select {|b| b.author.downcase.include?(author.downcase)}
+
+    return "No books found with author name matching '#{author}'" if results.empty?
+
+    results
+  end
 
 end
