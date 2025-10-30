@@ -96,8 +96,16 @@ class Library
     end
   end
 
+  def overdue_books
+    result = @books.select { |b| b.checked_out? && b.due_date < Date.today }
+
+    return 'No books found passing due date' if result.empty?
+
+    result
+  end
+
   def search_books_by_title(title)
-    results = @books.select {|b| b.title.downcase.include?(title.downcase)}
+    results = @books.select {|b| b.title.downcase.include?(title.downcase)} # find returns single element, select returns array
 
     return "No books found with title matching '#{title}'" if results.empty?
 
