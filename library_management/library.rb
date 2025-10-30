@@ -85,8 +85,14 @@ class Library
     end
 
     puts "\n=== Books in #{@name} ==="
-    @books.each do |book|
-      puts "#{book.title} available: #{book.availability_status}"
+    @books.each_with_index do |book, index|
+      puts "#{index + 1}. #{book}"
+
+      if book.available?
+        puts '   Status: Available'
+      else
+        puts "   Status: Checked out by #{book.checked_out_by.name} (Due: #{book.due_date})"
+      end
     end
   end
 
