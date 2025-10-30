@@ -45,7 +45,6 @@ class Library
   end
 
   def check_out(isbn, member_id)
-
     book = @books.find {|b| b.isbn == isbn}
     return 'Book not found' if book.nil?
 
@@ -60,7 +59,6 @@ class Library
     book.due_date = Date.today + CHECKOUT_DAYS
 
     member.checkout_book(book)
-
     "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
   end
 
@@ -70,16 +68,25 @@ class Library
 
     member = @members.find {|m| m.member_id == member_id}
     return 'Member not found' if member.nil?
-
     return 'Book is not checked out.' unless book.checked_out?
     return 'Member does not have this book' unless member.has_book?(book)
 
     book.availability_status = :available
     book.checked_out_by = nil
     book.due_date = nil
-
     member.return_book(book)
     "#{book.title} returned by #{member.name}. Thank you!"
+  end
 
+  def display_books
+    if @books.empty?
+      puts 'No books in the library!'
+      return
+    end
+
+    puts "\n=== Books in #{@name} ==="
+    @books.each do |book|
+      puts "#{book.title} available: #{book.availability_status}"
+    end
   end
 end
