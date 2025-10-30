@@ -89,4 +89,14 @@ class Library
       puts "#{book.title} available: #{book.availability_status}"
     end
   end
+
+  def search_books_by_title(title)
+    results = @books.select {|b| b.title.downcase.include?(title.downcase)}
+
+    return "No books found with title matching '#{title}'" if results.empty?
+
+    results
+  end
+
+
 end
