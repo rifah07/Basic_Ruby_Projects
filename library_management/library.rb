@@ -10,6 +10,7 @@
 #      - List overdue books
 
 require 'date'
+require_relative 'exceptions'
 
 # This is Library class
 class Library

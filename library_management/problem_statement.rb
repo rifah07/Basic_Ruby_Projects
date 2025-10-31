@@ -143,12 +143,3 @@
 ################################################################################
 # YOUR CODE STARTS HERE
 ################################################################################
-
-# Custom Exception Classes
-# TODO: Define your custom exceptions here
-
-# Library Class
-# TODO: Implement the Library class
-
-# Testing/Demo Code
-# TODO: Create instances and test your implementation
