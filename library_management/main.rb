@@ -72,10 +72,21 @@ rescue BookUnavailableError => e
 rescue LibraryError => e
   puts "✗ ERROR (Expected): #{e.message}"
 end
-puts
 
-# Try to checkout with invalid member
-# Pendin form here
+# Try to check out with invalid ISBN
+puts "\n=== Test 6: Try to Checkout with Invalid ISBN ==="
+begin
+  result = library.check_out('invalid-isbn', 101)
+  puts "✓ SUCCESS: #{result}"
+rescue BookNotFoundError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
+
+
+# Try to check out with invalid member
+# Pending form here
 
 # Return test
 puts "\n=== Returning 1984 ==="

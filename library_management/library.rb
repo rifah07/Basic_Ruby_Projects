@@ -46,11 +46,11 @@ class Library
   end
 
   def check_out(isbn, member_id)
-    book = @books.find {|b| b.isbn == isbn}
+    book = @books.find { |b| b.isbn == isbn}
     # return 'Book not found' if book.nil?
-    raise BookNotFoundError, "Book with ISBN #{isbn} not found" unless book
+    raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
 
-    member = @members.find {|m| m.member_id == member_id}
+    member = @members.find { |m| m.member_id == member_id}
     # return 'Member not found' if member.nil?
     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
 
@@ -68,11 +68,11 @@ class Library
   end
 
   def return_book(isbn, member_id)
-    book = @books.find {|b| b.isbn == isbn}
+    book = @books.find { |b| b.isbn == isbn}
     # return 'Book not found' if book.nil?
-    raise BookNotFoundError, "Book with ISBN #{isbn} not found" unless book
+    raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
 
-    member = @members.find {|m| m.member_id == member_id}
+    member = @members.find { |m| m.member_id == member_id}
     # return 'Member not found' if member.nil?
     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
 
