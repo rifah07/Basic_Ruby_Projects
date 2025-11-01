@@ -15,21 +15,6 @@ class MemberNotFoundError < LibraryError
 
 end
 
-class BookUnavailableError < LibraryError
-
-end
-
-class CheckoutLimitError < LibraryError
-  attr_reader :member_name, :limit
-
-  def initialize(member_name, limit)
-    @member_name = member_name
-    @limit = limit
-    super("#{member_name} has reached to the checkout limit of #{limit} books")
-  end
-
-end
-
 class BookAlreadyCheckedOutError  < LibraryError
 
 end
@@ -42,11 +27,7 @@ class WrongMemberError < LibraryError
 
 end
 
-class InvalidISBNError < LibraryError
-
-end
-
-class InvalidMemberIDError < LibraryError
+class BookUnavailableError < LibraryError
 
 end
 
@@ -56,6 +37,18 @@ end
 
 class DuplicateMemberError < LibraryError
 
+end
+
+
+# Important business logic - store data
+class CheckoutLimitError < LibraryError
+  attr_reader :member_name, :limit
+
+  def initialize(member_name, limit)
+    @member_name = member_name
+    @limit = limit
+    super("#{member_name} has reached to the checkout limit of #{limit} books")
+  end
 end
 
 class OverdueBookError < LibraryError
@@ -68,4 +61,19 @@ class OverdueBookError < LibraryError
     super("'#{@book_title}' is overdue by #{@days_overdue} days (due: #{due_date})")
   end
 
+end
+
+# Validation errors - default messages
+class InvalidISBNError < LibraryError
+  def initialize(isbn = nil)
+    message = isbn ? "Invalid ISBN format: '#{isbn}'" : 'Invalid ISBN format'
+    super(message)
+  end
+end
+
+class InvalidMemberIDError < LibraryError
+  def initialize(member_id = nil)
+    message = member_id ? "Invalid member ID: '#{member_id}'" : 'Invalid member ID'
+    super(message)
+  end
 end
