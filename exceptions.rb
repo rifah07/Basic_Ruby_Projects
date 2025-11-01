@@ -15,7 +15,7 @@ class MemberNotFoundError < LibraryError
 
 end
 
-class BookAlreadyCheckedOutError  < LibraryError
+class BookAlreadyCheckedOutError < LibraryError
 
 end
 

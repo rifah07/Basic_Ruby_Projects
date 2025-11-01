@@ -47,15 +47,15 @@ class Library
 
   def check_out(isbn, member_id)
     book = @books.find {|b| b.isbn == isbn}
-    #return 'Book not found' if book.nil?
+    # return 'Book not found' if book.nil?
     raise BookNotFoundError, "Book with ISBN #{isbn} not found" unless book
 
     member = @members.find {|m| m.member_id == member_id}
-    #return 'Member not found' if member.nil?
+    # return 'Member not found' if member.nil?
     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
 
-    #return 'Book not available' unless book.available?
-    #return 'Member at checkout limit' unless member.can_checkout?
+    # return 'Book not available' unless book.available?
+    # return 'Member at checkout limit' unless member.can_checkout?
     raise BookUnavailableError, "'#{book.title}' is currently checked out" unless book.available?
     raise CheckoutLimitError, "#{member.name} has reached the checkout limit of #{Member::CHECKOUT_LIMIT}" unless member.can_checkout?
 
@@ -69,12 +69,17 @@ class Library
 
   def return_book(isbn, member_id)
     book = @books.find {|b| b.isbn == isbn}
-    return 'Book not found' if book.nil?
+    # return 'Book not found' if book.nil?
+    raise BookNotFoundError, "Book with ISBN #{isbn} not found" unless book
 
     member = @members.find {|m| m.member_id == member_id}
-    return 'Member not found' if member.nil?
-    return 'Book is not checked out.' unless book.checked_out?
-    return 'Member does not have this book' unless member.has_book?(book)
+    # return 'Member not found' if member.nil?
+    raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
+
+    # return 'Book is not checked out.' unless book.checked_out?
+    # return 'Member does not have this book' unless member.has_book?(book)
+    raise BookNotCheckedOutError, 'This book is not checked out!' unless book.checked_out?
+    raise WrongMemberError, "Member with this id: '#{member_id}' does not have this book" unless member.has_book?(book)
 
     book.availability_status = :available
     book.checked_out_by = nil
