@@ -16,10 +16,12 @@ library = Library.new('City Public Library')
 book1 = Book.new('1984', 'George Orwell', '978-0451524935', 'Dystopian', 1949)
 book2 = Book.new('To Kill a Mockingbird', 'Harper Lee', '978-0061120084', 'Fiction', 1960)
 book3 = Book.new('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 'Classic', 1925)
+book4 = Book.new('Brave New World', 'Aldous Huxley', '978-0060850524', 'Dystopian', 1932)
 
 library.add_book(book1)
 library.add_book(book2)
 library.add_book(book3)
+library.add_book(book4)
 
 # Create and add members
 member1 = Member.new('Alice Johnson', 101)
@@ -84,15 +86,54 @@ rescue LibraryError => e
   puts "✗ ERROR: #{e.message}"
 end
 
-
 # Try to check out with invalid member
-# Pending form here
+puts "\n=== Test 7: Try to Checkout with Invalid Member ID ==="
+begin
+  result = library.check_out('978-0451524935', 999)
+  puts "✓ SUCCESS: #{result}"
+rescue MemberNotFoundError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
+
+# Test check out limit
+puts "\n=== Test 8: Test Checkout Limit (3 books max) ==="
+begin
+  # Alice already has 1 book, checkout 2 more
+  result1 = library.check_out('978-0061120084', 101)
+  puts "✓ Book 2 checked out: #{result1}"
+
+  result2 = library.check_out('978-0743273565', 101)
+  puts "✓ Book 3 checked out: #{result2}"
+
+  # Try to check out 4th book - should fail
+  result3 = library.check_out('978-0060850524', 101)
+  puts "✓ Book 4 checked out: #{result3}"
+rescue CheckoutLimitError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+  puts "   Member: #{e.member_name}"
+  puts "   Limit: #{e.limit}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
+
+puts "\n=== Current Library Status ==="
+library.display_books
 
 # Return test
-puts "\n=== Returning 1984 ==="
-puts library.return_book('978-0451524935', 101)
+puts "\n=== Test 9: Successful Return ==="
+begin
+  result = library.return_book('978-0451524935', 101)
+  puts "✓ SUCCESS: #{result}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
 
+puts "\n=== After Return ==="
 library.display_books
+
+# pending from Try to Return Book Member Doesn't Havemor
 
 # Overdue test (simulate overdue)
 puts "\n=== Testing overdue books ==="
