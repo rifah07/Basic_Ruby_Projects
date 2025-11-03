@@ -133,11 +133,13 @@ end
 puts "\n=== After Return ==="
 library.display_books
 
-# pending from Try to Return Book Member Doesn't Havemor
+# pending from Try to Return Book Member Doesn't Have
 
+=begin
 # Overdue test (simulate overdue)
 puts "\n=== Testing overdue books ==="
 library.check_out('978-0061120084', 101)
 book2.due_date = Date.today - 1 # Make it overdue
 puts 'Overdue books:'
 p library.overdue_books
+=end
