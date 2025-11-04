@@ -144,6 +144,16 @@ rescue LibraryError => e
   puts "✗ ERROR: #{e.message}"
 end
 
+# Try to return book that's not checked out
+puts "\n=== Test 11: Try to Return Available Book ==="
+begin
+  result = library.return_book('978-0060850524', 101)
+  puts "✓ SUCCESS: #{result}"
+rescue BookNotCheckedOutError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
 =begin
 # Overdue test (simulate overdue)
 puts "\n=== Testing overdue books ==="
