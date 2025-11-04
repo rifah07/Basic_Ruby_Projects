@@ -141,5 +141,8 @@
 # Focus on clean, readable code and solid OOP design principles.
 
 ################################################################################
-# YOUR CODE STARTS HERE
-################################################################################
+
+# TODO: Add checkout history to Member class
+# TODO: Implement different member types (Student, Faculty, Regular) with different privileges
+# TODO: Save/load library state to a file
+# TODO: Search books by Genre
