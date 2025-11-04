@@ -154,11 +154,29 @@ rescue BookNotCheckedOutError => e
 rescue LibraryError => e
   puts "✗ ERROR: #{e.message}"
 end
-=begin
+
 # Overdue test (simulate overdue)
-puts "\n=== Testing overdue books ==="
-library.check_out('978-0061120084', 101)
+puts "\n=== Test 12: Overdue Books ==="
+# Make book2 overdue (it's checked out by Alice)
 book2.due_date = Date.today - 1 # Make it overdue
-puts 'Overdue books:'
-p library.overdue_books
-=end
+puts "Setting '#{book2.title}' as 5 days overdue..."
+
+overdue = library.overdue_books
+if overdue.is_a?(Array)
+  puts "Found #{overdue.length} overdue book(s):"
+  overdue.each do |book|
+    puts "  - #{book.title} (Due: #{book.due_date}, Checked out by: #{book.checked_out_by.name})"
+  end
+else
+  puts overdue
+end
+
+# Test search with no results
+puts "\n=== Test 13: Search with No Results ==="
+result = library.search_books_by_title('Alchemy')
+puts result
+
+
+puts "\n" + "=" * 60
+puts "TESTING COMPLETE"
+puts "=" * 60
