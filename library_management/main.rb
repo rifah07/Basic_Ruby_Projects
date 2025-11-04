@@ -133,7 +133,16 @@ end
 puts "\n=== After Return ==="
 library.display_books
 
-# pending from Try to Return Book Member Doesn't Have
+# Try to Return Book Member Doesn't Have
+puts "\n=== Test 10: Try to Return Book Member Doesn't Have ==="
+begin
+  result = library.return_book('978-0061120084', 102)
+  puts "✓ SUCCESS: #{result}"
+rescue WrongMemberError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
 
 =begin
 # Overdue test (simulate overdue)
