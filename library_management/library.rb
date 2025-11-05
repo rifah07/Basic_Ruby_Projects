@@ -130,4 +130,12 @@ class Library
     results
   end
 
+  def search_books_by_genre(genre)
+    results = @books.select {|b| b.genre.downcase.include?(genre.downcase)}
+
+    return "No books found with genre matching '#{genre}'" if results.empty?
+
+    results
+  end
+
 end
