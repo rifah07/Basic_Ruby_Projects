@@ -7,7 +7,7 @@
 
 # This is member class for each member
 class Member
-  attr_reader :name, :member_id, :checked_books
+  attr_reader :name, :member_id, :checked_books, :checkout_history
 
   CHECKOUT_LIMIT = 3
 
@@ -15,6 +15,7 @@ class Member
     @name = name
     @member_id = member_id
     @checked_books = []
+    @checkout_history = []
   end
 
   def to_s
@@ -36,4 +37,5 @@ class Member
   def can_checkout?
     @checked_books.length < CHECKOUT_LIMIT
   end
+
 end
