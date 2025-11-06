@@ -5,6 +5,8 @@
   # - Methods: can_checkout? (check if member can borrow more books)
   # - Consider adding: checkout_limit (e.g., max 3 books), checkout_history
 
+require 'date'
+
 # This is member class for each member
 class Member
   attr_reader :name, :member_id, :checked_books, :checkout_history
@@ -47,6 +49,25 @@ class Member
 
   def can_checkout?
     @checked_books.length < CHECKOUT_LIMIT
+  end
+
+  # Show all checkout history
+  def show_checkout_history
+    if @checkout_history.empty?
+      puts 'No check out history'
+      return
+    end
+
+    puts "\n=== Checkout History for #{@name} ==="
+    @checkout_history.each_with_index do |record, index|
+      status = record[:return_date] ? "Returned: #{record[:return_date]}" : 'Currently checked out'
+      puts "#{index + 1}. #{record[:book].title} - Checked out: #{record[:checkout_date]} - #{status}"
+    end
+  end
+
+  # Count total books ever checked out
+  def total_books_checked_out
+    @checkout_history.length
   end
 
 end
