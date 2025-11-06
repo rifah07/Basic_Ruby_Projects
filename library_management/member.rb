@@ -28,10 +28,21 @@ class Member
 
   def checkout_book(book)
     @checked_books << book
+
+    # Add to history with checkout date
+    @checkout_history << {
+      book: book,
+      checkout_date: Date.today,
+      return_date: nil # not returned yet
+    }
   end
 
   def return_book(book)
     @checked_books.delete(book)
+
+    # Find the checkout record in history and update return_date
+    history_record = @checkout_history.find {|h| h[:book] == book && h[:return_date].nil?}
+    history_record[:return_date] = Date.today if history_record
   end
 
   def can_checkout?
