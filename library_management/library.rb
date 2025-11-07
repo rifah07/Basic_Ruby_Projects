@@ -141,6 +141,7 @@ class Library
   def find_member(member_id)
     member = @members.find { |m| m.member_id == member_id }
     raise MemberNotFoundError, "Member with ID '#{member_id}' not found" unless member
+
     member
   end
 
