@@ -176,6 +176,59 @@ puts "\n=== Test 13: Search with No Results ==="
 result = library.search_books_by_title('Alchemy')
 puts result
 
+# Test search by genre
+puts "\n=== Test 14: Search by Genre ==="
+results = library.search_books_by_genre('Dystopian')
+if results.is_a?(Array)
+  puts "Found #{results.length} Dystopian book(s):"
+  results.each {|b| puts "  - #{b}"}
+else
+  puts results
+end
+
+puts "\n" + "=" * 60
+puts "TESTING CHECKOUT HISTORY"
+puts "=" * 60
+
+puts "\n=== Alice's Checkout Activity ==="
+
+begin
+  # Alice already has books checked out, let's do more activity
+  puts library.return_book('978-0061120084', 101)
+  puts library.return_book('978-0743273565', 101)
+  puts library.check_out('978-0060850524', 101)
+  puts library.check_out('978-0451524935', 101)  # Re-checkout 1984
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
+puts "\n=== Alice's Complete Checkout History ==="
+begin
+  alice = library.find_member(101)
+  alice.show_checkout_history
+  puts "\n Alice's Stats:"
+  puts "  Total checkouts all-time: #{alice.total_books_checked_out}"
+  puts "  Currently has: #{alice.checked_books.length} book(s)"
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
+puts "\n=== Bob's Checkout Activity ==="
+begin
+  puts library.check_out('978-0061120084', 102)  # Now available
+  puts library.check_out('978-0743273565', 102)
+
+  bob = library.find_member(102)
+  bob.show_checkout_history
+  puts "\n Bob's Stats:"
+  puts "  Total checkouts all-time: #{bob.total_books_checked_out}"
+  puts "  Currently has: #{bob.checked_books.length} book(s)"
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
+puts "\n=== Final Library Status ==="
+library.display_books
 
 puts "\n" + "=" * 60
 puts "TESTING COMPLETE"
