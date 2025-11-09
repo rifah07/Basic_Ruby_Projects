@@ -21,7 +21,8 @@ class Member
   end
 
   def to_s
-    "Member: #{@name} (ID: #{@member_id}) - Books: #{@checked_books.length}/#{CHECKOUT_LIMIT}"
+    member_type = self.class.name
+    "#{member_type}: #{@name} (ID: #{@member_id}) - Books: #{@checked_books.length}/#{CHECKOUT_LIMIT}"
   end
 
   def has_book?(book)
@@ -48,7 +49,9 @@ class Member
   end
 
   def can_checkout?
-    @checked_books.length < CHECKOUT_LIMIT
+    @checked_books.length < self.class::CHECKOUT_LIMIT
+    # self.class gets the actual class (Student, Faculty, etc.)
+    # :: accesses the constant from that class
   end
 
   # Show all checkout history
