@@ -12,6 +12,7 @@ class Member
   attr_reader :name, :member_id, :checked_books, :checkout_history
 
   CHECKOUT_LIMIT = 3
+  CHECKOUT_DAYS = 14
 
   def initialize(name, member_id)
     @name = name

@@ -11,6 +11,7 @@
 
 require 'date'
 require_relative 'exceptions'
+require_relative 'Member'
 
 # This is Library class
 class Library
@@ -61,7 +62,7 @@ class Library
 
     book.availability_status = :checked_out
     book.checked_out_by = member
-    book.due_date = Date.today + CHECKOUT_DAYS
+    book.due_date = Date.today + member.class::CHECKOUT_DAYS
 
     member.checkout_book(book)
     "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
