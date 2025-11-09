@@ -4,6 +4,9 @@ require 'date'
 require_relative 'Book'
 require_relative 'Member'
 require_relative 'Library'
+require_relative 'student'
+require_relative 'faculty'
+require_relative 'regular_member'
 
 puts '=' * 60
 puts 'LIBRARY MANAGEMENT SYSTEM - TESTING'
@@ -17,18 +20,33 @@ book1 = Book.new('1984', 'George Orwell', '978-0451524935', 'Dystopian', 1949)
 book2 = Book.new('To Kill a Mockingbird', 'Harper Lee', '978-0061120084', 'Fiction', 1960)
 book3 = Book.new('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 'Classic', 1925)
 book4 = Book.new('Brave New World', 'Aldous Huxley', '978-0060850524', 'Dystopian', 1932)
+book5 = Book.new("Harry Potter", "J.K. Rowling", "978-0439708180", "Fantasy", 1997)
+book6 = Book.new("The Hobbit", "J.R.R. Tolkien", "978-0547928227", "Fantasy", 1937)
+book7 = Book.new("Dune", "Frank Herbert", "978-0441172719", "Sci-Fi", 1965)
 
 library.add_book(book1)
 library.add_book(book2)
 library.add_book(book3)
 library.add_book(book4)
+library.add_book(book5)
+library.add_book(book6)
+library.add_book(book7)
 
 # Create and add members
 member1 = Member.new('Alice Johnson', 101)
 member2 = Member.new('Bob Smith', 102)
 
+# Create different member types
+student = Student.new("Charlie Brown", 201)
+faculty = Faculty.new("Dr. Smith", 202)
+regular = RegularMember.new("Jane Doe", 203)
+
 library.add_member(member1)
 library.add_member(member2)
+
+library.add_member(student)
+library.add_member(faculty)
+library.add_member(regular)
 
 # Display all books
 puts "\n=== Test 1: Display All Books ==="
