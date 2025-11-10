@@ -285,6 +285,29 @@ rescue LibraryError => e
   puts "Error: #{e.message}"
 end
 
+# Test Regular Member limit (3 books)
+puts "\n--- Regular Member (Jane) - Limit: 3 books ---"
+begin
+  puts "✓ Book 1: #{library.check_out('978-0451524935', 203)}"
+
+  # Need to free up books
+  student_member = library.find_member(201)
+  puts "\nCharlie returns books..."
+  library.return_book('978-0439708180', 201)
+  library.return_book('978-0547928227', 201)
+  library.return_book('978-0441172719', 202)
+
+  puts "\n✓ Book 2: #{library.check_out('978-0439708180', 203)}"
+  puts "✓ Book 3: #{library.check_out('978-0547928227', 203)}"
+
+  # Try 4th - should fail
+  puts "✓ Book 4 (should fail): #{library.check_out('978-0441172719', 203)}"
+rescue CheckoutLimitError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+  puts "   Limit: #{e.limit}"
+rescue LibraryError => e
+  puts "✗ ERROR: #{e.message}"
+end
 
 puts "\n=== Final Library Status ==="
 library.display_books
