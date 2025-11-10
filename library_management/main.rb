@@ -204,9 +204,8 @@ else
   puts results
 end
 
-puts "\n" + "=" * 60
-puts "TESTING CHECKOUT HISTORY"
-puts "=" * 60
+
+puts "\n=== Test 15: Testing Checkout History ==="
 
 puts "\n=== Alice's Checkout Activity ==="
 
@@ -244,6 +243,20 @@ begin
 rescue LibraryError => e
   puts "Error: #{e.message}"
 end
+
+puts "\n=== Test 16: Test Checkout Limits by Member Type ==="
+begin
+  puts "\n--- Student (Charlie) - Limit: 2 books ---"
+  puts "✓ Book 1: #{library.check_out('978-0439708180', 201)}"
+  puts "✓ Book 2: #{library.check_out('978-0547928227', 201)}"
+  puts "✓ Book 3 (should fail): #{library.check_out('978-0441172719', 201)}"
+rescue CheckoutLimitError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+  puts "   Limit: #{e.limit}"
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
 
 puts "\n=== Final Library Status ==="
 library.display_books
