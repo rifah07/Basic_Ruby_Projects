@@ -23,6 +23,9 @@ book4 = Book.new('Brave New World', 'Aldous Huxley', '978-0060850524', 'Dystopia
 book5 = Book.new("Harry Potter", "J.K. Rowling", "978-0439708180", "Fantasy", 1997)
 book6 = Book.new("The Hobbit", "J.R.R. Tolkien", "978-0547928227", "Fantasy", 1937)
 book7 = Book.new("Dune", "Frank Herbert", "978-0441172719", "Sci-Fi", 1965)
+book8 = Book.new("Physics 101", "Dr. Jones", "978-1234567890", "Science", 2020)
+book9 = Book.new("Chemistry", "Dr. Lee", "978-1234567891", "Science", 2021)
+book10 = Book.new("Biology", "Dr. Wang", "978-1234567892", "Science", 2019)
 
 library.add_book(book1)
 library.add_book(book2)
@@ -31,6 +34,9 @@ library.add_book(book4)
 library.add_book(book5)
 library.add_book(book6)
 library.add_book(book7)
+library.add_book(book8)
+library.add_book(book9)
+library.add_book(book10)
 
 # Create and add members
 member1 = Member.new('Alice Johnson', 101)
@@ -244,12 +250,34 @@ rescue LibraryError => e
   puts "Error: #{e.message}"
 end
 
+# Test Student limit (2 books)
 puts "\n=== Test 16: Test Checkout Limits by Member Type ==="
+puts "\n--- Student (Charlie) - Limit: 2 books ---"
 begin
-  puts "\n--- Student (Charlie) - Limit: 2 books ---"
   puts "✓ Book 1: #{library.check_out('978-0439708180', 201)}"
   puts "✓ Book 2: #{library.check_out('978-0547928227', 201)}"
   puts "✓ Book 3 (should fail): #{library.check_out('978-0441172719', 201)}"
+rescue CheckoutLimitError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+  puts "   Limit: #{e.limit}"
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
+# Test Faculty limit (5 books)
+puts "\n--- Faculty (Dr. Smith) - Limit: 5 books ---"
+begin
+  puts "✓ Book 1: #{library.check_out('978-0441172719', 202)}"
+  puts "✓ Book 2: #{library.check_out('978-1234567890', 202)}"
+  puts "✓ Book 3: #{library.check_out('978-1234567891', 202)}"
+  puts "✓ Book 4: #{library.check_out('978-1234567892', 202)}"
+
+  library.return_book('978-0060850524', 101) # Free up a book from Alice
+  library.return_book('978-0451524935', 101)
+  puts "✓ Book 5: #{library.check_out('978-0060850524', 202)}"
+
+  # Try 6th book - should fail
+  puts "✓ Book 6 (should fail): #{library.check_out('978-0451524935', 202)}"
 rescue CheckoutLimitError => e
   puts "✗ ERROR (Expected): #{e.message}"
   puts "   Limit: #{e.limit}"

@@ -58,7 +58,7 @@ class Library
     # return 'Book not available' unless book.available?
     # return 'Member at checkout limit' unless member.can_checkout?
     raise BookUnavailableError, "'#{book.title}' is currently checked out" unless book.available?
-    raise CheckoutLimitError.new(member.name, Member::CHECKOUT_LIMIT) unless member.can_checkout?
+    raise CheckoutLimitError.new(member.name, member.class::CHECKOUT_LIMIT) unless member.can_checkout?
 
     book.availability_status = :checked_out
     book.checked_out_by = member
