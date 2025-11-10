@@ -309,6 +309,27 @@ rescue LibraryError => e
   puts "✗ ERROR: #{e.message}"
 end
 
+
+puts "\n=== Test 17: Test Different Checkout Durations ==="
+
+charlie_books = library.find_member(201)
+dr_smith_books = library.find_member(202)
+jane_books = library.find_member(203)
+
+puts "\nCharlie (Student) checkout history:"
+charlie_books.show_checkout_history
+
+puts "\nDr. Smith (Faculty) checkout history:"
+dr_smith_books.show_checkout_history
+
+puts "\nJane (Regular) checkout history:"
+jane_books.show_checkout_history
+
+puts "\n=== Comparing Due Dates ==="
+# Check the due dates to see different durations
+puts "Note: Students get 14 days, Faculty get 30 days, Regular get 14 days"
+
+
 puts "\n=== Final Library Status ==="
 library.display_books
 
