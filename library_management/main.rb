@@ -294,6 +294,7 @@ begin
   student_member = library.find_member(201)
   puts "\nCharlie returns books..."
   library.return_book('978-0439708180', 201)
+  # noinspection RubyScope
   library.return_book('978-0547928227', 201)
   library.return_book('978-0441172719', 202)
 
