@@ -7,6 +7,8 @@ require_relative 'Library'
 require_relative 'student'
 require_relative 'faculty'
 require_relative 'regular_member'
+require_relative 'member_type'
+require_relative 'member_composition'
 
 puts '=' * 60
 puts 'LIBRARY MANAGEMENT SYSTEM - TESTING'
@@ -328,7 +330,50 @@ jane_books.show_checkout_history
 
 puts "\n=== Comparing Due Dates ==="
 # Check the due dates to see different durations
-puts "Note: Students get 14 days, Faculty get 30 days, Regular get 14 days"
+puts 'Note: Students get 14 days, Faculty get 30 days, Regular get 14 days'
+
+
+puts "\n=== Library Status ==="
+library.display_books
+
+
+puts "\n" + "=" * 40
+puts 'TESTING COMPOSITION PATTERN'
+puts "=" * 40
+
+puts "\n===Creating Members with Composition ==="
+
+# Create composition-based members
+comp_student = MemberComposition.new('Emma Watson', 301, StudentType.new)
+comp_faculty = MemberComposition.new('Prof. Mc Gonagall', 302, FacultyType.new)
+comp_regular = MemberComposition.new('Harry Miller', 303, RegularMemberType.new)
+
+library.add_member(comp_student)
+library.add_member(comp_faculty)
+library.add_member(comp_regular)
+
+puts "\n=== Test: Student Checkout Limit (Composition) ==="
+begin
+  # Make the books available to use
+  library.return_book('978-0451524935', 203)
+  library.return_book('978-0061120084', 102)
+  library.return_book('978-0743273565', 102)
+  library.return_book('978-0060850524', 202)
+  library.return_book('978-0439708180', 203)
+  library.return_book('978-0547928227', 203)
+  library.return_book('978-1234567890', 202)
+  library.return_book('978-1234567891', 202)
+  library.return_book('978-1234567892', 202)
+
+  puts library.check_out('978-0451524935', 301)
+  puts library.check_out('978-0061120084', 301)
+  puts library.check_out('978-0743273565', 301) # Error as limit is 2
+rescue CheckoutLimitError => e
+  puts "✗ ERROR (Expected): #{e.message}"
+  puts "   Limit: #{e.limit}"
+rescue LibraryError => e
+  puts "   Error: #{e.message}"
+end
 
 
 puts "\n=== Final Library Status ==="
