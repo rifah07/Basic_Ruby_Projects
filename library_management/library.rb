@@ -46,6 +46,7 @@ class Library
     @members.delete_if {|member| member.member_id == id}
   end
 
+=begin
   def check_out(isbn, member_id)
     book = @books.find { |b| b.isbn == isbn}
     # return 'Book not found' if book.nil?
@@ -67,6 +68,35 @@ class Library
     member.checkout_book(book)
     "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
   end
+=end
+
+  def check_out(isbn, member_id)
+    book = @books.find { |b| b.isbn == isbn}
+    # return 'Book not found' if book.nil?
+    raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
+
+    member = @members.find { |m| m.member_id == member_id}
+    # return 'Member not found' if member.nil?
+    raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
+
+    # return 'Book not available' unless book.available?
+    # return 'Member at checkout limit' unless member.can_checkout?
+    raise BookUnavailableError, "'#{book.title}' is currently checked out" unless book.available?
+
+    # Get checkout limit - works for BOTH inheritance and composition!
+    limit = get_member_checkout_limit(member)
+    raise CheckoutLimitError.new(member.name, limit) unless member.can_checkout?
+
+    book.availability_status = :checked_out
+    book.checked_out_by = member
+
+    # Get checkout days - works for BOTH patterns!
+    book.due_date = Date.today + get_member_checkout_days(member)
+
+    member.checkout_book(book)
+    "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
+  end
+
 
 
   def return_book(isbn, member_id)
@@ -145,6 +175,25 @@ class Library
     raise MemberNotFoundError, "Member with ID '#{member_id}' not found" unless member
 
     member
+  end
+
+  # Works with both inheritance (Student, Faculty) and composition (MemberComposition)
+  def get_member_checkout_limit(member)
+    if member.respond_to?(:checkout_limit) # Ruby method respond_to? checks if an object has a specific method.
+      # Composition: has checkout_limit method
+      member.checkout_limit
+    else
+      # Inheritance: use class constant
+      member.class::CHECKOUT_LIMIT
+    end
+  end
+
+  def get_member_checkout_days(member)
+    if member.respond_to?(:checkout_days)
+      member.checkout_limit # Composition
+    else
+      member.class::CHECKOUT_DAYS  # Inheritance
+    end
   end
 
 end
