@@ -7,7 +7,7 @@
 class MemberType
   attr_reader :name, :checkout_days, :checkout_limit
 
-  def initialize(name, checkout_days, checkout_limit)
+  def initialize(name, checkout_limit, checkout_days)
     @name = name
     @checkout_days = checkout_days
     @checkout_limit = checkout_limit
