@@ -387,10 +387,38 @@ puts "After: #{emma}"
 puts "Checkout limit after: #{emma.checkout_limit}"
 puts 'Type changed at runtime! History preserved!'
 
+puts "\n=== Now Emma Can Checkout More Books! ==="
+begin
+  puts library.check_out('978-0743273565', 301)
+  puts library.check_out('978-0060850524', 301)
+  puts library.check_out('978-0439708180', 301)
+rescue LibraryError => e
+  puts "Error: #{e.message}"
+end
+
+puts "\n=== Emma's Complete History (Preserved Through Upgrade!) ==="
+emma.show_checkout_history
+
+puts "\n=== Comparing Inheritance vs Composition ==="
+puts "\nInheritance (Charlie - Student class):"
+charlie = library.find_member(201)
+puts charlie
+puts "  - Class: #{charlie.class.name}"
+puts '  - Can change type? NO'
+
+puts "\nComposition (Emma - MemberComposition with FacultyType):"
+puts emma
+puts "  - Class: #{emma.class.name}"
+puts "  - Member Type: #{emma.member_type.name}"
+puts '  - Can change type? YES'
+
+puts "\n" + "=" * 30
+puts 'COMPOSITION TESTING COMPLETE'
+puts "=" * 30
 
 puts "\n=== Final Library Status ==="
 library.display_books
 
 puts "\n" + "=" * 60
-puts "TESTING COMPLETE"
+puts 'TESTING COMPLETE'
 puts "=" * 60
