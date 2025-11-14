@@ -72,4 +72,15 @@ class MemberComposition
     @checkout_history.length
   end
 
+  # NEW FEATURE: Change member type!
+  def upgrade_to_faculty!
+    @member_type = FacultyType.new
+    puts "#{@name} has been upgraded to Faculty status!"
+  end
+
+  def downgrade_to_student!
+    @member_type = StudentType.new
+    puts "#{@name} has been changed to Student status!"
+  end
+
 end

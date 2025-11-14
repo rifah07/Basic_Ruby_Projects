@@ -375,6 +375,18 @@ rescue LibraryError => e
   puts "   Error: #{e.message}"
 end
 
+puts "\n=== 🎓 MAGIC: Emma Graduates! Student → Faculty ==="
+emma = library.find_member(301)
+puts "Before: #{emma}"
+puts "Checkout limit before: #{emma.checkout_limit}"
+
+# THE MAGIC MOMENT!
+emma.upgrade_to_faculty!
+
+puts "After: #{emma}"
+puts "Checkout limit after: #{emma.checkout_limit}"
+puts 'Type changed at runtime! History preserved!'
+
 
 puts "\n=== Final Library Status ==="
 library.display_books
