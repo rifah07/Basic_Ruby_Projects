@@ -217,6 +217,37 @@ class Library
     puts "✗ Error saving library: #{e.message}"
   end
 
+  def self.load_from_file(filename = 'library_data.json')
+    filepath = File.join('data', filename)
+
+    unless File.exist?(filepath)
+      puts "✗ File '#{filepath}' not found!"
+      return nil
+    end
+
+    data = JSON.parse(File.read(filepath), symbolize_names: true)
+
+    # Create new library
+    library = Library.new(data[:library_name])
+
+    # Recreate books
+    library.load_books(data[:books])
+
+    # Recreate members
+    library.load_members(data[:members])
+
+    # Reconnect relationships (books ↔ members)
+    library.reconnect_relationships(data)
+
+    puts "✓ Library loaded from #{filepath}"
+    library
+  rescue => e
+    puts "✗ Error loading library: #{e.message}"
+    puts e.backtrace.first(5)
+    nil
+
+  end
+
   # private methods from here
   private
 
@@ -268,4 +299,41 @@ class Library
     end
   end
 
+  # Load books from JSON data
+  def load_books(book_data)
+    book_data.each do |book_data|
+      book = Book.new(
+        book_data[:title],
+        book_data[:author],
+        book_data[:isbn],
+        book_data[:genre],
+        book_data[:publication_year]
+      )
+
+      # Restore status (will reconnect member later)
+      book.availability_status = book_data[:availability_status].to_sym
+
+      # Restore due date if exists
+      book.due_date = Date.parse(book_data[:due_date]) if book_data[:due_date]
+
+      @books << book
+    end
+  end
+
+  # Load members from JSON data
+  def load_members(members_data)
+    members_data.each do |member_data|
+      member = create_member_from_data(member_data)
+      @members << member if member
+    end
+  end
+
+  # Create the correct member type
+  def create_member_from_data(member_data)
+
+  end
+
+  def reconnect_relationships()
+
+  end
 end
