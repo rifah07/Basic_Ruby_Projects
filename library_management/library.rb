@@ -10,6 +10,7 @@
 #      - List overdue books
 
 require 'date'
+require 'json'
 require_relative 'exceptions'
 require_relative 'Member'
 
@@ -193,6 +194,77 @@ class Library
       member.checkout_limit # Composition
     else
       member.class::CHECKOUT_DAYS  # Inheritance
+    end
+  end
+
+  def save_to_file(filename = 'library_data.json')
+    data = {
+      library_name: @name,
+      books: serialize_books,
+      members: serialize_members
+    }
+
+    # Create 'data' folder if it doesn't exist
+    Dir.mkdir('data') unless Dir.exist?('data')
+
+    # Save inside the data folder
+    filepath = File.join('data', filename)
+
+    File.write(filepath, JSON.pretty_generate(data))
+
+    puts "✓ Library saved to #{filename}"
+  rescue => e
+    puts "✗ Error saving library: #{e.message}"
+  end
+
+  # private methods from here
+  private
+
+  # Convert books to JSON-friendly format
+  def serialize_books
+    @books.map do |book|
+      {
+        title: book.title,
+        author: book.author,
+        isbn: book.isbn,
+        genre: book.genre,
+        publication_year: book.publication_year,
+        availability_status: book.availability_status.to_s,
+        checked_out_by_id: book.checked_out_by&.member_id, # book.checked_out_by ? book.checked_out_by.member_id : nil
+        due_date: book.due_date&.to_s # book.due_date ? book.due_date.to_s : nil
+      }
+    end
+  end
+
+  def serialize_members
+    @members.map do |member|
+      {
+        name: member.name,
+        member_id: member.member_id,
+        member_class: member.class.name, # "Student", "Faculty", "MemberComposition", etc.
+        member_type: get_member_type_name(member), # For composition members
+        checked_book_isbns: member.checked_books.map(&:isbn),
+        checkout_history: serialize_checkout_history(member)
+      }
+    end
+  end
+
+
+  def get_member_type_name(member)
+    if member.respond_to?(:member_type)
+      member.member_type # Composition
+    else
+      member.class.name # inheritance
+    end
+  end
+
+  def serialize_checkout_history(member)
+    member.checkout_history.map do |record|
+      {
+        book_isbn: record[:book].isbn,
+        checkout_days: record[:checkout_days].to_s,
+        return_date: record[:return_date]&.to_s
+      }
     end
   end
 

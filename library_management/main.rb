@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'date'
+require 'json'
 require_relative 'Book'
 require_relative 'Member'
 require_relative 'Library'
@@ -415,6 +416,20 @@ puts '  - Can change type? YES'
 puts "\n" + "=" * 30
 puts 'COMPOSITION TESTING COMPLETE'
 puts "=" * 30
+
+puts "\n=== Library Status ==="
+library.display_books
+
+puts "\n" + "=" * 40
+puts 'TESTING SAVE/LOAD FUNCTIONALITY'
+puts "=" * 40
+
+puts "Current directory: #{Dir.pwd}"
+
+puts "\n=== Saving Library State ==="
+library.save_to_file('my_library.json')
+puts "\n✓ Check your project folder - you should see 'my_library.json' file!"
+puts 'Open it in your editor to see the saved data!'
 
 puts "\n=== Final Library Status ==="
 library.display_books

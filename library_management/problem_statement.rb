@@ -142,5 +142,4 @@
 
 ################################################################################
 
-# TODO: Implement different member types (Student, Faculty, Regular) with different privileges
 # TODO: Save/load library state to a file
