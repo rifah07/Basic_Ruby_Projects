@@ -330,10 +330,29 @@ class Library
 
   # Create the correct member type
   def create_member_from_data(member_data)
+    case member_data[:member_class]
+    when 'Student'
+      Student.new(member_data[:name], member_data[:member_id])
+    when 'Faculty'
+      Faculty.new(member_data[:name], member_data[:member_id])
+    when 'RegularMember'
+      RegularMember.new(member_data[:name], member_data[:member_id])
+    when 'MemberComposition'
+      member_type = create_member_type(member_data[:member_type])
+      MemberComposition.new(member_data[:member_type], member_data[:member_id], member_type)
+    else
+      # Default
+      Member.new(member_data[:name], member_data[:member_id])
+    end
 
   end
 
-  def reconnect_relationships()
+  # Create member type for composition members
+  def create_member_type(type_name)
+
+  end
+
+  def reconnect_relationships(data)
 
   end
 end
