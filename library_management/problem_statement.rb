@@ -141,5 +141,3 @@
 # Focus on clean, readable code and solid OOP design principles.
 
 ################################################################################
-
-# TODO: Save/load library state to a file
