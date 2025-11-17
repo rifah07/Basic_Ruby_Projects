@@ -13,6 +13,11 @@ require 'date'
 require 'json'
 require_relative 'exceptions'
 require_relative 'Member'
+require_relative 'student'
+require_relative 'faculty'
+require_relative 'regular_member'
+require_relative 'member_type'
+require_relative 'member_composition'
 
 # This is Library class
 class Library
@@ -248,6 +253,76 @@ class Library
 
   end
 
+  # Load books from JSON data
+  def load_books(book_data)
+    book_data.each do |book_data|
+      book = Book.new(
+        book_data[:title],
+        book_data[:author],
+        book_data[:isbn],
+        book_data[:genre],
+        book_data[:publication_year]
+      )
+
+      # Restore status (will reconnect member later)
+      book.availability_status = book_data[:availability_status].to_sym
+
+      # Restore due date if exists
+      book.due_date = Date.parse(book_data[:due_date]) if book_data[:due_date]
+
+      @books << book
+    end
+  end
+
+  # Load members from JSON data
+  def load_members(members_data)
+    members_data.each do |member_data|
+      member = create_member_from_data(member_data)
+      @members << member if member
+    end
+  end
+
+
+  # Reconnect books to members
+  def reconnect_relationships(data)
+    data[:books].each do |book_data|
+      next unless book_data[:checked_out_by_id]
+
+      # Find the book and member
+      book = @books.find {|b| b.isbn == book_data[:isbn] }
+      member = @members.find {|m| m.member_id == book_data[:checked_out_by_id] }
+
+      if book && member
+        # Reconnect the relationship
+        book.checked_out_by = member
+        member.checked_books << book unless member.checked_books.include?(book)
+      end
+    end
+
+    # Restore checkout history
+    data[:members].each do |member_data|
+      member = @members.find { |m| m.member_id == member_data[:member_id] }
+      next unless member
+
+      restore_checkout_history(member, member_data[:checkout_history])
+    end
+  end
+
+  # Restore member's checkout history
+  def restore_checkout_history(member, history_data)
+    history_data.each do |record|
+      book = @books.find { |b| b.isbn == record[:book_isbn] }
+      next unless book
+
+      member.checkout_history << {
+        book: book,
+        checkout_date: Date.parse(record[:checkout_date]),
+        return_date: record[:return_date] ? Date.parse(record[:return_date]) : nil
+      }
+    end
+  end
+
+
   # private methods from here
   private
 
@@ -299,34 +374,6 @@ class Library
     end
   end
 
-  # Load books from JSON data
-  def load_books(book_data)
-    book_data.each do |book_data|
-      book = Book.new(
-        book_data[:title],
-        book_data[:author],
-        book_data[:isbn],
-        book_data[:genre],
-        book_data[:publication_year]
-      )
-
-      # Restore status (will reconnect member later)
-      book.availability_status = book_data[:availability_status].to_sym
-
-      # Restore due date if exists
-      book.due_date = Date.parse(book_data[:due_date]) if book_data[:due_date]
-
-      @books << book
-    end
-  end
-
-  # Load members from JSON data
-  def load_members(members_data)
-    members_data.each do |member_data|
-      member = create_member_from_data(member_data)
-      @members << member if member
-    end
-  end
 
   # Create the correct member type
   def create_member_from_data(member_data)
@@ -349,10 +396,19 @@ class Library
 
   # Create member type for composition members
   def create_member_type(type_name)
-
+    case type_name
+    when 'Student'
+      StudentType.new
+    when 'Faculty'
+      FacultyType.new
+    when 'RegularMember'
+      RegularMemberType.new
+    # when 'Senior Citizen'
+      # SeniorType.new
+    else
+      RegularMemberType.new
+    end
   end
 
-  def reconnect_relationships(data)
 
-  end
 end
