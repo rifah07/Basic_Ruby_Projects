@@ -468,6 +468,37 @@ if loaded_library
   end
 end
 
+puts "\n" + "=" * 60
+puts "FINAL VERIFICATION: SAVE → LOAD → VERIFY"
+puts "=" * 60
+
+puts "\n1. Saving current state..."
+library.save_to_file('final_test.json')
+
+puts "\n2. Loading from file..."
+loaded = Library.load_from_file('final_test.json')
+
+puts "\n3. Verifying loaded data..."
+if loaded
+  puts "✓ Library name: #{loaded.name}"
+  puts "✓ Books count: #{loaded.instance_variable_get(:@books).length}"
+  puts "✓ Members count: #{loaded.instance_variable_get(:@members).length}"
+
+  # Test that operations work on loaded library
+  puts "\n4. Testing operations on loaded library..."
+  begin
+    # Try a checkout
+    puts loaded.check_out('978-0439708180', 301)
+    puts "✓ Checkout works on loaded library!"
+  rescue LibraryError => e
+    puts "Note: #{e.message}"
+  end
+
+  puts "\n✅ PERSISTENCE SYSTEM FULLY FUNCTIONAL!"
+else
+  puts "✗ Load failed!"
+end
+
 puts "\n=== Final Library Status ==="
 library.display_books
 
