@@ -314,10 +314,19 @@ class Library
       book = @books.find { |b| b.isbn == record[:book_isbn] }
       next unless book
 
+      checkout_date = record[:checkout_date] ? Date.parse(record[:checkout_date]) : Date.today
+
+      # Only parse return_date if it exists and is not nil
+      return_date = if record[:return_date] && !record[:return_date].empty?
+                      Date.parse(record[:return_date])
+                    else
+                      nil
+                    end
+
       member.checkout_history << {
         book: book,
-        checkout_date: Date.parse(record[:checkout_date]),
-        return_date: record[:return_date] ? Date.parse(record[:return_date]) : nil
+        checkout_date: checkout_date,
+        return_date: return_date
       }
     end
   end

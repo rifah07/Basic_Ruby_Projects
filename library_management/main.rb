@@ -449,6 +449,25 @@ if loaded_library
   end
 end
 
+puts "\n=== Loading Library from File ==="
+loaded_library = Library.load_from_file('my_library.json')
+
+if loaded_library
+  puts "\n✓ Library loaded successfully!"
+  puts "Library name: #{loaded_library.name}"
+
+  puts "\n=== Loaded Books ==="
+  loaded_library.display_books
+
+  puts "\n=== Loaded Members ==="
+  # Show a few members
+  alice = loaded_library.find_member(101) rescue nil
+  if alice
+    puts alice
+    alice.show_checkout_history
+  end
+end
+
 puts "\n=== Final Library Status ==="
 library.display_books
 
