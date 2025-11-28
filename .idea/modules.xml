@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.ruby-lsp/.iml" filepath="$PROJECT_DIR$/.ruby-lsp/.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/.iml" filepath="$PROJECT_DIR$/.idea/modules/.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1.iml" filepath="$PROJECT_DIR$/.idea/modules/1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Library_management_oop.iml" filepath="$PROJECT_DIR$/.idea/modules/Library_management_oop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Ruby_Projects.iml" filepath="$PROJECT_DIR$/.idea/Ruby_Projects.iml" />
     </modules>
   </component>
