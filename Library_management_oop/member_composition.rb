@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'date'
 require_relative 'member_type'
 
@@ -9,7 +10,7 @@ class MemberComposition
   def initialize(name, member_id, member_type)
     @name = name
     @member_id = member_id
-    @member_type = member_type  # Inject type
+    @member_type = member_type # Inject type
     @checked_books = []
     @checkout_history = []
   end
@@ -49,7 +50,7 @@ class MemberComposition
     @checked_books.delete(book)
 
     # Find the checkout record in history and update return_date
-    history_record = @checkout_history.find {|h| h[:book] == book && h[:return_date].nil?}
+    history_record = @checkout_history.find { |h| h[:book] == book && h[:return_date].nil? }
     history_record[:return_date] = Date.today if history_record
   end
 
@@ -82,5 +83,4 @@ class MemberComposition
     @member_type = StudentType.new
     puts "#{@name} has been changed to Student status!"
   end
-
 end

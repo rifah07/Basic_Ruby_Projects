@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'Member'
 
 class Faculty < Member
@@ -8,5 +9,4 @@ class Faculty < Member
   def member_type
     'Faculty'
   end
-
 end

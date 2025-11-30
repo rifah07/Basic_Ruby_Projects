@@ -40,12 +40,12 @@ book1 = Book.new('1984', 'George Orwell', '978-0451524935', 'Dystopian', 1949)
 book2 = Book.new('To Kill a Mockingbird', 'Harper Lee', '978-0061120084', 'Fiction', 1960)
 book3 = Book.new('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 'Classic', 1925)
 book4 = Book.new('Brave New World', 'Aldous Huxley', '978-0060850524', 'Dystopian', 1932)
-book5 = Book.new("Harry Potter", "J.K. Rowling", "978-0439708180", "Fantasy", 1997)
-book6 = Book.new("The Hobbit", "J.R.R. Tolkien", "978-0547928227", "Fantasy", 1937)
-book7 = Book.new("Dune", "Frank Herbert", "978-0441172719", "Sci-Fi", 1965)
-book8 = Book.new("Physics 101", "Dr. Jones", "978-1234567890", "Science", 2020)
-book9 = Book.new("Chemistry", "Dr. Lee", "978-1234567891", "Science", 2021)
-book10 = Book.new("Biology", "Dr. Wang", "978-1234567892", "Science", 2019)
+book5 = Book.new('Harry Potter', 'J.K. Rowling', '978-0439708180', 'Fantasy', 1997)
+book6 = Book.new('The Hobbit', 'J.R.R. Tolkien', '978-0547928227', 'Fantasy', 1937)
+book7 = Book.new('Dune', 'Frank Herbert', '978-0441172719', 'Sci-Fi', 1965)
+book8 = Book.new('Physics 101', 'Dr. Jones', '978-1234567890', 'Science', 2020)
+book9 = Book.new('Chemistry', 'Dr. Lee', '978-1234567891', 'Science', 2021)
+book10 = Book.new('Biology', 'Dr. Wang', '978-1234567892', 'Science', 2019)
 
 library.add_book(book1)
 library.add_book(book2)
@@ -63,9 +63,9 @@ member1 = Member.new('Alice Johnson', 101)
 member2 = Member.new('Bob Smith', 102)
 
 # Create different member types
-student = Student.new("Charlie Brown", 201)
-faculty = Faculty.new("Dr. Smith", 202)
-regular = RegularMember.new("Jane Doe", 203)
+student = Student.new('Charlie Brown', 201)
+faculty = Faculty.new('Dr. Smith', 202)
+regular = RegularMember.new('Jane Doe', 203)
 
 library.add_member(member1)
 library.add_member(member2)
@@ -82,7 +82,7 @@ library.display_books
 puts "\n=== Test 2: Search for 'kill' ==="
 results = library.search_books_by_title('kill')
 if results.is_a?(Array)
-  results.each { |book| puts "  - #{book}"}
+  results.each { |book| puts "  - #{book}" }
 else
   puts results # Error message
 end
@@ -90,7 +90,7 @@ end
 puts "\n=== Test 3: Search for 'Orwell' ==="
 results = library.search_books_by_author('Orwell')
 if results.is_a?(Array)
-  results.each { |book| puts "  - #{book}"}
+  results.each { |book| puts "  - #{book}" }
 else
   puts results # Error message
 end
@@ -225,7 +225,7 @@ puts "\n=== Test 14: Search by Genre ==="
 results = library.search_books_by_genre('Dystopian')
 if results.is_a?(Array)
   puts "Found #{results.length} Dystopian book(s):"
-  results.each {|b| puts "  - #{b}"}
+  results.each { |b| puts "  - #{b}" }
 else
   puts results
 end
@@ -311,7 +311,7 @@ begin
   puts "✓ Book 1: #{library.check_out('978-0451524935', 203)}"
 
   # Need to free up books
-  student_member = library.find_member(201)
+  library.find_member(201)
   puts "\nCharlie returns books..."
   library.return_book('978-0439708180', 201)
   # noinspection RubyScope
@@ -355,9 +355,9 @@ puts "\n=== Library Status ==="
 library.display_books
 
 
-puts "\n" + "=" * 40
+puts "\n#{'=' * 40}"
 puts 'TESTING COMPOSITION PATTERN'
-puts "=" * 40
+puts '=' * 40
 
 puts "\n===Creating Members with Composition ==="
 
@@ -430,16 +430,16 @@ puts "  - Class: #{emma.class.name}"
 puts "  - Member Type: #{emma.member_type.name}"
 puts '  - Can change type? YES'
 
-puts "\n" + "=" * 30
+puts "\n#{'=' * 30}"
 puts 'COMPOSITION TESTING COMPLETE'
-puts "=" * 30
+puts '=' * 30
 
 puts "\n=== Library Status ==="
 library.display_books
 
-puts "\n" + "=" * 40
+puts "\n#{'=' * 40}"
 puts 'TESTING SAVE/LOAD FUNCTIONALITY'
-puts "=" * 40
+puts '=' * 40
 
 puts "Current directory: #{Dir.pwd}"
 
@@ -459,7 +459,11 @@ if loaded_library
 
   puts "\n=== Loaded Members ==="
   # Show a few members
-  alice = loaded_library.find_member(101) rescue nil
+  alice = begin
+    loaded_library.find_member(101)
+  rescue StandardError
+    nil
+  end
   if alice
     puts alice
     alice.show_checkout_history
@@ -478,16 +482,20 @@ if loaded_library
 
   puts "\n=== Loaded Members ==="
   # Show a few members
-  alice = loaded_library.find_member(101) rescue nil
+  alice = begin
+    loaded_library.find_member(101)
+  rescue StandardError
+    nil
+  end
   if alice
     puts alice
     alice.show_checkout_history
   end
 end
 
-puts "\n" + "=" * 60
-puts "FINAL VERIFICATION: SAVE → LOAD → VERIFY"
-puts "=" * 60
+puts "\n#{'=' * 60}"
+puts 'FINAL VERIFICATION: SAVE → LOAD → VERIFY'
+puts '=' * 60
 
 puts "\n1. Saving current state..."
 library.save_to_file('final_test.json')
@@ -506,19 +514,19 @@ if loaded
   begin
     # Try a checkout
     puts loaded.check_out('978-0439708180', 301)
-    puts "✓ Checkout works on loaded library!"
+    puts '✓ Checkout works on loaded library!'
   rescue LibraryError => e
     puts "Note: #{e.message}"
   end
 
   puts "\n✅ PERSISTENCE SYSTEM FULLY FUNCTIONAL!"
 else
-  puts "✗ Load failed!"
+  puts '✗ Load failed!'
 end
 
 puts "\n=== Final Library Status ==="
 library.display_books
 
-puts "\n" + "=" * 60
+puts "\n#{'=' * 60}"
 puts 'TESTING COMPLETE'
-puts "=" * 60
+puts '=' * 60

@@ -49,39 +49,37 @@ class Library
   def remove_member(id)
     # member = @members.find {|m| m.id == id}
     # @members.delete(member) if member
-    @members.delete_if {|member| member.member_id == id}
+    @members.delete_if { |member| member.member_id == id }
   end
 
-=begin
+  #   def check_out(isbn, member_id)
+  #     book = @books.find { |b| b.isbn == isbn}
+  #     # return 'Book not found' if book.nil?
+  #     raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
+  #
+  #     member = @members.find { |m| m.member_id == member_id}
+  #     # return 'Member not found' if member.nil?
+  #     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
+  #
+  #     # return 'Book not available' unless book.available?
+  #     # return 'Member at checkout limit' unless member.can_checkout?
+  #     raise BookUnavailableError, "'#{book.title}' is currently checked out" unless book.available?
+  #     raise CheckoutLimitError.new(member.name, member.class::CHECKOUT_LIMIT) unless member.can_checkout?
+  #
+  #     book.availability_status = :checked_out
+  #     book.checked_out_by = member
+  #     book.due_date = Date.today + member.class::CHECKOUT_DAYS
+  #
+  #     member.checkout_book(book)
+  #     "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
+  #   end
+
   def check_out(isbn, member_id)
-    book = @books.find { |b| b.isbn == isbn}
+    book = @books.find { |b| b.isbn == isbn }
     # return 'Book not found' if book.nil?
     raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
 
-    member = @members.find { |m| m.member_id == member_id}
-    # return 'Member not found' if member.nil?
-    raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
-
-    # return 'Book not available' unless book.available?
-    # return 'Member at checkout limit' unless member.can_checkout?
-    raise BookUnavailableError, "'#{book.title}' is currently checked out" unless book.available?
-    raise CheckoutLimitError.new(member.name, member.class::CHECKOUT_LIMIT) unless member.can_checkout?
-
-    book.availability_status = :checked_out
-    book.checked_out_by = member
-    book.due_date = Date.today + member.class::CHECKOUT_DAYS
-
-    member.checkout_book(book)
-    "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
-  end
-=end
-
-  def check_out(isbn, member_id)
-    book = @books.find { |b| b.isbn == isbn}
-    # return 'Book not found' if book.nil?
-    raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
-
-    member = @members.find { |m| m.member_id == member_id}
+    member = @members.find { |m| m.member_id == member_id }
     # return 'Member not found' if member.nil?
     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
 
@@ -103,14 +101,12 @@ class Library
     "#{book.title} checked out to #{member.name}. Due: #{book.due_date}"
   end
 
-
-
   def return_book(isbn, member_id)
-    book = @books.find { |b| b.isbn == isbn}
+    book = @books.find { |b| b.isbn == isbn }
     # return 'Book not found' if book.nil?
     raise BookNotFoundError, "Book with ISBN '#{isbn}' not found" unless book
 
-    member = @members.find { |m| m.member_id == member_id}
+    member = @members.find { |m| m.member_id == member_id }
     # return 'Member not found' if member.nil?
     raise MemberNotFoundError, "Member with ID #{member_id} not found" unless member
 
@@ -153,15 +149,17 @@ class Library
   end
 
   def search_books_by_title(title)
-    results = @books.select {|b| b.title.downcase.include?(title.downcase)} # find returns single element, select returns array
-
+    results = # find returns single element, select returns array
+      @books.select do |b|
+        b.title.downcase.include?(title.downcase)
+      end
     return "No books found with title matching '#{title}'" if results.empty?
 
     results
   end
 
   def search_books_by_author(author)
-    results = @books.select {|b| b.author.downcase.include?(author.downcase)}
+    results = @books.select { |b| b.author.downcase.include?(author.downcase) }
 
     return "No books found with author name matching '#{author}'" if results.empty?
 
@@ -169,7 +167,7 @@ class Library
   end
 
   def search_books_by_genre(genre)
-    results = @books.select {|b| b.genre.downcase.include?(genre.downcase)}
+    results = @books.select { |b| b.genre.downcase.include?(genre.downcase) }
 
     return "No books found with genre matching '#{genre}'" if results.empty?
 
@@ -198,7 +196,7 @@ class Library
     if member.respond_to?(:checkout_days)
       member.checkout_limit # Composition
     else
-      member.class::CHECKOUT_DAYS  # Inheritance
+      member.class::CHECKOUT_DAYS # Inheritance
     end
   end
 
@@ -218,7 +216,7 @@ class Library
     File.write(filepath, JSON.pretty_generate(data))
 
     puts "✓ Library saved to #{filename}"
-  rescue => e
+  rescue StandardError => e
     puts "✗ Error saving library: #{e.message}"
   end
 
@@ -246,11 +244,10 @@ class Library
 
     puts "✓ Library loaded from #{filepath}"
     library
-  rescue => e
+  rescue StandardError => e
     puts "✗ Error loading library: #{e.message}"
     puts e.backtrace.first(5)
     nil
-
   end
 
   # Load books from JSON data
@@ -282,21 +279,20 @@ class Library
     end
   end
 
-
   # Reconnect books to members
   def reconnect_relationships(data)
     data[:books].each do |book_data|
       next unless book_data[:checked_out_by_id]
 
       # Find the book and member
-      book = @books.find {|b| b.isbn == book_data[:isbn] }
-      member = @members.find {|m| m.member_id == book_data[:checked_out_by_id] }
+      book = @books.find { |b| b.isbn == book_data[:isbn] }
+      member = @members.find { |m| m.member_id == book_data[:checked_out_by_id] }
 
-      if book && member
-        # Reconnect the relationship
-        book.checked_out_by = member
-        member.checked_books << book unless member.checked_books.include?(book)
-      end
+      next unless book && member
+
+      # Reconnect the relationship
+      book.checked_out_by = member
+      member.checked_books << book unless member.checked_books.include?(book)
     end
 
     # Restore checkout history
@@ -317,11 +313,7 @@ class Library
       checkout_date = record[:checkout_date] ? Date.parse(record[:checkout_date]) : Date.today
 
       # Only parse return_date if it exists and is not nil
-      return_date = if record[:return_date] && !record[:return_date].empty?
-                      Date.parse(record[:return_date])
-                    else
-                      nil
-                    end
+      return_date = (Date.parse(record[:return_date]) if record[:return_date] && !record[:return_date].empty?)
 
       member.checkout_history << {
         book: book,
@@ -364,7 +356,6 @@ class Library
     end
   end
 
-
   def get_member_type_name(member)
     if member.respond_to?(:member_type)
       member.member_type # Composition
@@ -383,7 +374,6 @@ class Library
     end
   end
 
-
   # Create the correct member type
   def create_member_from_data(member_data)
     case member_data[:member_class]
@@ -400,7 +390,6 @@ class Library
       # Default
       Member.new(member_data[:name], member_data[:member_id])
     end
-
   end
 
   # Create member type for composition members
@@ -412,12 +401,10 @@ class Library
       FacultyType.new
     when 'RegularMember'
       RegularMemberType.new
-    # when 'Senior Citizen'
+      # when 'Senior Citizen'
       # SeniorType.new
     else
       RegularMemberType.new
     end
   end
-
-
 end

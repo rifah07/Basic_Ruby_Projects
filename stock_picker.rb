@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def stock_picker(prices)
   min_price = prices[0]
   max_profit = 0
@@ -11,15 +13,15 @@ def stock_picker(prices)
       temp_buy_day = idx
     end
 
-    if value - min_price > max_profit
-      max_profit = value - min_price
-      sell_day = idx
-      buy_day = temp_buy_day
-    end
+    next unless value - min_price > max_profit
+
+    max_profit = value - min_price
+    sell_day = idx
+    buy_day = temp_buy_day
   end
 
- [buy_day, sell_day]
+  [buy_day, sell_day]
 end
 
-puts stock_picker([17,3,6,9,15,8,6,1,10])
-#puts stock_picker([17,3,6,9,15,8,6,1,10,20])
+puts stock_picker([17, 3, 6, 9, 15, 8, 6, 1, 10])
+# puts stock_picker([17,3,6,9,15,8,6,1,10,20])

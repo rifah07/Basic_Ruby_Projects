@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Member class should have:
-  # - Attributes: name, member_id, list of checked out books
-  # - Methods: can_checkout? (check if member can borrow more books)
-  # - Consider adding: checkout_limit (e.g., max 3 books), checkout_history
+# - Attributes: name, member_id, list of checked out books
+# - Methods: can_checkout? (check if member can borrow more books)
+# - Consider adding: checkout_limit (e.g., max 3 books), checkout_history
 
 require 'date'
 
@@ -45,7 +45,7 @@ class Member
     @checked_books.delete(book)
 
     # Find the checkout record in history and update return_date
-    history_record = @checkout_history.find {|h| h[:book] == book && h[:return_date].nil?}
+    history_record = @checkout_history.find { |h| h[:book] == book && h[:return_date].nil? }
     history_record[:return_date] = Date.today if history_record
   end
 
@@ -73,5 +73,4 @@ class Member
   def total_books_checked_out
     @checkout_history.length
   end
-
 end

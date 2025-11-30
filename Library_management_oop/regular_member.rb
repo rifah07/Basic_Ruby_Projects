@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'Member'
 
 class RegularMember < Member
@@ -9,4 +10,3 @@ class RegularMember < Member
     'Regular Member'
   end
 end
-

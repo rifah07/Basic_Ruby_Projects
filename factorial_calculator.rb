@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def factorial(num)
   result = 1
   (1..num).each do |i|
@@ -5,7 +7,7 @@ def factorial(num)
   end
   result
 end
-puts "Factorial results using Iteartion"
+puts 'Factorial results using Iteartion'
 puts factorial(2)
 puts factorial(3)
 puts factorial(6)
@@ -15,17 +17,15 @@ puts factorial(6)
 
 def factorial_recursion(num)
   return 1 if num <= 1
-  num * factorial_recursion(num-1)
+
+  num * factorial_recursion(num - 1)
 end
-puts "Factorial results using Recursion"
+puts 'Factorial results using Recursion'
 puts factorial_recursion(2)
 puts factorial_recursion(3)
 puts factorial_recursion(6)
 
-=begin
-Complexity Comparison:
-Iteration: Time Complexity : O(n); Space Complexity: O(1)
-Recursion: Time Complexity : O(n); Space Complexity: O(n)
-So, Time complexity is same for both while in Iteartion approach is more space-effitient
-=end
-
+# Complexity Comparison:
+# Iteration: Time Complexity : O(n); Space Complexity: O(1)
+# Recursion: Time Complexity : O(n); Space Complexity: O(n)
+# So, Time complexity is same for both while in Iteartion approach is more space-effitient

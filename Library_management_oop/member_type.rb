@@ -14,7 +14,6 @@ class MemberType
   end
 end
 
-
 # Specific member types
 class StudentType < MemberType
   def initialize

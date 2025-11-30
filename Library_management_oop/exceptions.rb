@@ -4,41 +4,31 @@
 
 require 'date'
 class LibraryError < StandardError
-
 end
 
 class BookNotFoundError < LibraryError
-
 end
 
 class MemberNotFoundError < LibraryError
-
 end
 
 class BookAlreadyCheckedOutError < LibraryError
-
 end
 
 class BookNotCheckedOutError < LibraryError
-
 end
 
 class WrongMemberError < LibraryError
-
 end
 
 class BookUnavailableError < LibraryError
-
 end
 
 class DuplicateBookError < LibraryError
-
 end
 
 class DuplicateMemberError < LibraryError
-
 end
-
 
 # Important business logic - store data
 class CheckoutLimitError < LibraryError
@@ -60,7 +50,6 @@ class OverdueBookError < LibraryError
     @days_overdue = (Date.today - due_date).to_i
     super("'#{@book_title}' is overdue by #{@days_overdue} days (due: #{due_date})")
   end
-
 end
 
 # Validation errors - default messages

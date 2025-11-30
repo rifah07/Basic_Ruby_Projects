@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Ruby OOP Challenge: Library Management System
 #
 # Objective:
