@@ -12,7 +12,7 @@
 require 'date'
 require 'json'
 require_relative 'exceptions'
-require_relative 'Member'
+require_relative 'member'
 require_relative 'student'
 require_relative 'faculty'
 require_relative 'regular_member'
@@ -194,7 +194,7 @@ class Library
 
   def get_member_checkout_days(member)
     if member.respond_to?(:checkout_days)
-      member.checkout_limit # Composition
+      member.checkout_days # Composition
     else
       member.class::CHECKOUT_DAYS # Inheritance
     end
@@ -262,10 +262,10 @@ class Library
       )
 
       # Restore status (will reconnect member later)
-      book.availability_status = book_data[:availability_status].to_sym
+      book.availability_status = bd[:availability_status].to_sym
 
       # Restore due date if exists
-      book.due_date = Date.parse(book_data[:due_date]) if book_data[:due_date]
+      book.due_date = Date.parse(bd[:due_date]) if bd[:due_date]
 
       @books << book
     end

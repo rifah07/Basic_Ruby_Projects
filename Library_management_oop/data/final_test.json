@@ -9,7 +9,7 @@
       "publication_year": 1949,
       "availability_status": "checked_out",
       "checked_out_by_id": 301,
-      "due_date": "2025-11-26"
+      "due_date": "2026-01-01"
     },
     {
       "title": "To Kill a Mockingbird",
@@ -19,7 +19,7 @@
       "publication_year": 1960,
       "availability_status": "checked_out",
       "checked_out_by_id": 301,
-      "due_date": "2025-11-26"
+      "due_date": "2026-01-01"
     },
     {
       "title": "The Great Gatsby",
@@ -29,7 +29,7 @@
       "publication_year": 1925,
       "availability_status": "checked_out",
       "checked_out_by_id": 301,
-      "due_date": "2025-11-29"
+      "due_date": "2026-01-04"
     },
     {
       "title": "Brave New World",
@@ -39,7 +39,7 @@
       "publication_year": 1932,
       "availability_status": "checked_out",
       "checked_out_by_id": 301,
-      "due_date": "2025-11-29"
+      "due_date": "2026-01-04"
     },
     {
       "title": "Harry Potter",
@@ -49,7 +49,7 @@
       "publication_year": 1997,
       "availability_status": "checked_out",
       "checked_out_by_id": 301,
-      "due_date": "2025-11-29"
+      "due_date": "2026-01-04"
     },
     {
       "title": "The Hobbit",
@@ -113,27 +113,27 @@
         {
           "book_isbn": "978-0451524935",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0061120084",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0743273565",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0060850524",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0451524935",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         }
       ]
     },
@@ -147,12 +147,12 @@
         {
           "book_isbn": "978-0061120084",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0743273565",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         }
       ]
     },
@@ -166,12 +166,12 @@
         {
           "book_isbn": "978-0439708180",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0547928227",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         }
       ]
     },
@@ -185,27 +185,27 @@
         {
           "book_isbn": "978-0441172719",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-1234567890",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-1234567891",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-1234567892",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0060850524",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         }
       ]
     },
@@ -219,17 +219,17 @@
         {
           "book_isbn": "978-0451524935",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0439708180",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         },
         {
           "book_isbn": "978-0547928227",
           "checkout_days": "",
-          "return_date": "2025-11-24"
+          "return_date": "2025-12-30"
         }
       ]
     },
@@ -237,7 +237,7 @@
       "name": "Emma Watson",
       "member_id": 301,
       "member_class": "MemberComposition",
-      "member_type": "#<FacultyType:0x00000115cfb05050>",
+      "member_type": "#<FacultyType:0x00007bab196bc930>",
       "checked_book_isbns": [
         "978-0451524935",
         "978-0061120084",
@@ -277,7 +277,7 @@
       "name": "Prof. Mc Gonagall",
       "member_id": 302,
       "member_class": "MemberComposition",
-      "member_type": "#<FacultyType:0x00000115cfb067c0>",
+      "member_type": "#<FacultyType:0x00007bab196545d8>",
       "checked_book_isbns": [],
       "checkout_history": []
     },
@@ -285,7 +285,7 @@
       "name": "Harry Miller",
       "member_id": 303,
       "member_class": "MemberComposition",
-      "member_type": "#<RegularMemberType:0x00000115cfb066a8>",
+      "member_type": "#<RegularMemberType:0x00007bab196540b0>",
       "checked_book_isbns": [],
       "checkout_history": []
     }

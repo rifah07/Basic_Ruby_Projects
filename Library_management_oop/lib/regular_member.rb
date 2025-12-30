@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'Member'
+require_relative 'member'
 
 class RegularMember < Member
   CHECKOUT_LIMIT = 3

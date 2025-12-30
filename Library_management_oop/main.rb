@@ -19,14 +19,14 @@
 
 require 'date'
 require 'json'
-require_relative 'Book'
-require_relative 'Member'
-require_relative 'Library'
-require_relative 'student'
-require_relative 'faculty'
-require_relative 'regular_member'
-require_relative 'member_type'
-require_relative 'member_composition'
+require_relative 'lib/book'
+require_relative 'lib/member'
+require_relative 'lib/library'
+require_relative 'lib/student'
+require_relative 'lib/faculty'
+require_relative 'lib/regular_member'
+require_relative 'lib/member_type'
+require_relative 'lib/member_composition'
 
 puts '=' * 60
 puts 'LIBRARY MANAGEMENT SYSTEM - TESTING'
